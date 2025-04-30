@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DungeonExplorer
 {
-    internal class Goblin : Creature
+    internal class Goblin : Creature, Idamage //inherits from creature and uses damage interface
     {
         //monster attributes
         private string variant;

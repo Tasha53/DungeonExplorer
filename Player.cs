@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DungeonExplorer
 {
-    class Player: Creature //Inherits from creature
+    class Player: Creature, Idamage//Inherits from creature and uses damage interface
     {
         //Player class' attributes
         private string name;
