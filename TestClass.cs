@@ -68,8 +68,6 @@ namespace DungeonExplorer
             Debug.Assert(player1 != null, "The player was not created");
             Debug.Assert(player1.Health != 0, "The player doesn't have the" +
                 " right amount of health");
-            //Debug.Assert(player1.Inventory != null, "The player's inventory" +
-            //" was not created");
             Debug.Assert(player1.Name != null, "The player doesn't have " +
                 "a name");
         }
