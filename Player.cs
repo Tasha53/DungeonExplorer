@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace DungeonExplorer
 {
-    public class Player
+    class Player: Creature //Inherits from creature
     {
         //Player class' attributes
         private string name;
-        private int health;
+        private int strength;
         private List<string> inventory;
 
         static Random rnd = new Random();
@@ -34,21 +34,22 @@ namespace DungeonExplorer
             }
         }
 
-        public int Health
+        public int Strength //Starts as 0, is increased as the player uses weapons
         {
-            get { return health; }
+            get { return strength; }
             set
             {
-                if (value < 0) //checking that "health" is given a valid value
+                if (value < 0) //checking that "strength" is given a valid value
                 {
-                    health = 0;
+                    strength = 0;
                 }
                 else
                 {
-                    health = value;
+                    strength = value;
                 }
             }
         }
+        
 
         public List<string> Inventory
         {
@@ -57,11 +58,11 @@ namespace DungeonExplorer
         }
 
         //Player constructor
-        public Player(string name, int health, List<string> inventory) 
+        public Player(string name, int health, int strength, List<string> inventory) : base (health)
         {
 
             name = Name;
-            health = Health;
+            strength = Strength;
             inventory = Inventory;
 
         }
@@ -72,11 +73,39 @@ namespace DungeonExplorer
             inventory.Add(item);
         }
 
-        //Function which displays contents of player's inventory
-        public string InventoryContents()
+        //Function to randomly determine how much damage the player does
+        public int playerAttack()
         {
-            return string.Join(Environment.NewLine, inventory.Select((x, n)
-                => $"{n+1}. {x}"));
+            int damageNum = rnd.Next(1, 5);
+            int damageValue = 0;
+            switch (damageNum)
+            {
+                case 1:
+                    damageValue = 0; //Adds more damage to damageValue if the player
+                                                //has used an item to increase their strength
+                    Console.WriteLine($"The attack fails! You dealt {damageValue} damage!");
+                    break;
+                case 2:
+                    damageValue = 5 + Strength;
+                    Console.WriteLine($"You attack feebly! You only deal {damageValue} damage");
+                    break;
+                case 3:
+                    damageValue = 10 + Strength;
+                    Console.WriteLine($"You attack the monster! You deal {damageValue} damage!");
+                    break;
+                case 4:
+                    damageValue = 20 + Strength;
+                    Console.WriteLine($"Your attack is really powerful! You deal {damageValue} damage!");
+                    break;
+            }
+            return damageValue;
+        }
+
+        //Polymorphism - inherits DamagePlayer from creature and overrides
+        //it so the player doesn't damage itself
+        public override int DamagePlayer(int playerHealth)
+        {
+            return playerHealth;
         }
     }
 }
